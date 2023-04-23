@@ -7,7 +7,7 @@ chrome.runtime.onInstalled.addListener(function (details) {
 
 // create a default system message
 function defaultSystemMessage() {
-    const systemMessage = "You are GPT4Chrome, helpful and friendly chat bot that the user can access without leaving the favorite website. Your answers will be compact.";
+    const systemMessage = "You are GPT4Chrome a chrome extension that provides a helpful and friendly chatbot, based on the OpenAi GPT models, that the user can access without leaving the favorite website. Your answers will be compact.";
     return systemMessage;
 }
 
