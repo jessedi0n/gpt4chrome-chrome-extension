@@ -1,0 +1,17 @@
+body {
+    background-color: #343541 !important;
+    color: white !important;
+}
+
+a {
+    text-decoration: none;
+    color: white !important;
+}
+
+#options {
+    padding: 1rem;
+}
+
+#model-version-select {
+    width: auto;
+}

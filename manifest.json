@@ -1,0 +1,27 @@
+{
+    "manifest_version": 3,
+    "name": "GPT4Chrome",
+    "version": "0.1.0",
+    "description": "This extension allows you to access OpenAI's chat-based language models on any website.",
+    "author": "jessedi0n",
+    "icons": {
+        "16": "assets/icons/icon-16.png",
+        "32": "assets/icons/icon-32.png",
+        "96": "assets/icons/icon-96.png"
+    },
+    "host_permissions": [
+        "https://api.openai.com/v1/completions"
+    ],
+    "permissions": [
+        "storage",
+        "tabs",
+        "contextMenus"
+    ],
+    "background": {
+        "service_worker": "src/background.js"
+    },
+    "action": {
+        "default_popup": "popup/popup.html"
+    },
+    "options_page": "options/options.html"
+}
