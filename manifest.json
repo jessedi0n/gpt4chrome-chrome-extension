@@ -1,8 +1,8 @@
 {
     "manifest_version": 3,
     "name": "GPT4Chrome",
-    "version": "0.1.0",
-    "description": "This extension allows you to access OpenAI's chat-based language models on any website.",
+    "version": "0.1",
+    "description": "With GPT4Chrome, you can have a seamless ChatGPT experience, without ever leaving your favorite website.",
     "author": "jessedi0n",
     "icons": {
         "16": "assets/icons/icon-16.png",
