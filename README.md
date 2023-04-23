@@ -14,6 +14,9 @@ Introducing **GPT4Chrome** – the Chrome extension that brings the power of Ope
 ### Note
 To use this extension, you will need an API key from OpenAI. Without, the extension will not work as expected. Visit the OpenAI website to sign up and obtain a key. Once you have the API key, simply enter it into the extension settings and you will be ready to go.
 
+## Screenshots
+![gpt4chrome preview 1](https://github.com/jessedi0n/gpt4chrome/blob/main/assets/images/gpt4chrome-preview-1.png)
+
 ## Installation
 
 **Cloning the Repository**
@@ -38,9 +41,6 @@ To install GPT4Chrome by downloading the repository, follow these steps:
 6. Select the GPT4Chrome folder that you extracted in step 2.
 7. Enter your OpenAI API key and click on the save button.
 8. GPT4Chrome should now be installed and ready to use.
-
-## Screenshots
-[screen1][screen2]
 
 ## Contributing
 Contributions are welcome! To contribute, follow these steps:
