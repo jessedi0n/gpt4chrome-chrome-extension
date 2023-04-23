@@ -51,6 +51,3 @@ Contributions are welcome! To contribute, follow these steps:
     1. Fork the repository.
     2. Make your changes.
     3. Submit a pull request.
-
-## License
-This project is licensed under the MIT License. See the LICENSE file for details.
