@@ -1,7 +1,6 @@
+# GPT4Chrome
 
-![GPT4Chrome - Header](https://github.com/jessedi0n/gpt4chrome/blob/main/assets/images/gpt4chrome-header.png)
-
-Introducing **GPT4Chrome** – the Chrome extension that brings the power of OpenAI's GPT models to every web page you visit. With GPT4Chrome, you can have a seamless chat experience, without ever leaving your favorite website. Whether you're researching a topic or just looking for some AI-powered fun, GPT4Chrome is always just a click away.
+A Chrome extension that brings the power of OpenAI's GPT models to every web page you visit. With GPT4Chrome, you can have a seamless chat experience, without ever leaving your favorite website. Whether you're researching a topic or just looking for some AI-powered fun, GPT4Chrome is always just a click away.
 
 ## Features
 
