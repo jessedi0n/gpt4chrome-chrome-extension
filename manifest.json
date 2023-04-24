@@ -14,14 +14,13 @@
     ],
     "permissions": [
         "storage",
-        "tabs",
-        "contextMenus"
+        "tabs"
     ],
     "background": {
-        "service_worker": "src/background.js"
+        "service_worker": "pages/background/background.js"
     },
     "action": {
-        "default_popup": "popup/popup.html"
+        "default_popup": "pages/popup/popup.html"
     },
-    "options_page": "options/options.html"
+    "options_page": "pages/options/options.html"
 }
