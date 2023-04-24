@@ -1,11 +1,16 @@
-let conversationListWrapper = document.getElementById('conversationListWrapper');
-let chat = document.getElementById('chat');
-let chatWrapper = document.getElementById('chatWrapper');
-let chatHeaderToggleConversations = document.getElementById('chatHeaderToggleConversationsButton');
-let toggleConversationsIcon = document.getElementById('toggleConversationsIcon');
-let chatHeaderTitle = document.getElementById('chatHeaderTitle');
-let clearConversationsButton = document.getElementById('clearConversationsButton');
-let inputSearch = document.getElementById('input-search');
+const conversationListWrapper = document.getElementById('conversationListWrapper');
+const chat = document.getElementById('chat');
+const chatWrapper = document.getElementById('chatWrapper');
+const chatHeaderToggleConversations = document.getElementById('chatHeaderToggleConversationsButton');
+const toggleConversationsIcon = document.getElementById('toggleConversationsIcon');
+const chatHeaderTitle = document.getElementById('chatHeaderTitle');
+const inputForm = document.getElementById('input-message');
+const buttonSendMessage = document.getElementById('button-send-message');
+const sendMessageIcon = document.getElementById('send-message-icon');
+const loadingIndicator = document.getElementById('loading-indicator');
+const addConversationButton = document.getElementById('new-conversation-button');
+const clearConversationsButton = document.getElementById('clearConversationsButton');
+const inputSearch = document.getElementById('input-search');
 
 let isLoading = false;
 let selectedConversation = 0;
@@ -103,11 +108,16 @@ function displayConversations(conversations) {
 
         // add event listener to conversation element to load messages on click
         conversationElement.addEventListener('click', () => {
-            // remove the active class from the selected conversation per id
-            const conversationElements = document.getElementById('conversation-' + selectedConversation);
-            conversationElements.classList.remove('active');
+            // remove the active class from the selected conversation per id if it exists
+            const selectedConversationElement = document.getElementById('conversation-' + selectedConversation);
+            if (selectedConversationElement) {
+                selectedConversationElement.classList.remove('active');
+            }
 
-            // set the selected conversation to the conversation id of the clicked conversation
+            // add the active class to the clicked conversation
+            conversationElement.classList.add('active');
+
+            // set the selected conversation to the clicked conversation
             selectedConversation = conversation.id;
 
             // show the messages of the clicked conversation
@@ -119,14 +129,7 @@ function displayConversations(conversations) {
 
         // display the messages of the selected conversation
         if (conversation.id === selectedConversation) {
-
             showMessagesByConversation(conversation.id);
-            // set the chat header title to the current conversation name
-            chatHeaderTitle.innerText = conversations[conversation.id].name;
-
-            // get the conversationelement and set button to active
-            const conversationElement = document.getElementById('conversation-' + conversation.id);
-            conversationElement.classList.add('active');
         }
     });
 }
@@ -148,10 +151,17 @@ function deleteConversation(conversationId) {
         // save the updated conversation list
         chrome.storage.local.set({
             conversations: result.conversations
-        }, () => {
-            // initialize the conversations
-            initConversation();
         });
+
+        // set the selected conversation
+        if (conversationId > 0) {
+            selectedConversation = conversationId - 1;
+        } else {
+            selectedConversation = 0;
+        }
+
+        // initialize the conversations
+        initConversation();
     });
 }
 
@@ -160,20 +170,16 @@ clearConversationsButton.addEventListener('click', () => {
     // clear the conversation list
     chrome.storage.local.set({
         conversations: []
-    }, () => {
-        // initialize a new conversation
-        initConversation();
-
-        // set the selected conversation to 0
-        selectedConversation = 0;
-
-        // remove the search input value
-        inputSearch.value = '';
     });
-});
+    // initialize a new conversation
+    initConversation();
 
-// button to add a new conversation
-const addConversationButton = document.getElementById('new-conversation-button');
+    // set the selected conversation to 0
+    selectedConversation = 0;
+
+    // remove the search input value
+    inputSearch.value = '';
+});
 
 // add a new conversation when the button is clicked
 addConversationButton.addEventListener('click', () => {
@@ -208,9 +214,6 @@ addConversationButton.addEventListener('click', () => {
     });
 });
 
-// Set the icon to the left arrow by default
-toggleConversationsIcon.classList.add('fa-bars');
-
 // Toggle the conversation list on and off when the toggle button is clicked
 chatHeaderToggleConversations.addEventListener('click', function () {
     // if conversation list has class hidden, show it
@@ -223,14 +226,13 @@ chatHeaderToggleConversations.addEventListener('click', function () {
     }
 });
 
-const inputForm = document.getElementById('input-message');
-const buttonSendMessage = document.getElementById('button-send-message');
-
 // display conversation messages
-function showMessagesByConversation(index) {
+function showMessagesByConversation(conversationId) {
+    // focus on the input field
+    inputForm.focus();
 
-    selectedConversation = index;
-
+    // set the selected conversation by index
+    selectedConversation = conversationId;
 
     // clear the chat wrapper
     chatWrapper.innerHTML = '';
@@ -239,7 +241,7 @@ function showMessagesByConversation(index) {
 
     // get the conversation list from the storage
     chrome.storage.local.get(['conversations'], (result) => {
-        const conversation = result.conversations[index];
+        const conversation = result.conversations[conversationId];
 
         // loop through the messages if there are any
         if (conversation.messages.length > 0) {
@@ -258,9 +260,6 @@ function showMessagesByConversation(index) {
 
         // set the chat header title to the current conversation name
         chatHeaderTitle.innerText = conversation.name;
-
-        // // get the starred messages
-        // getStarredMessages();
 
         // get the conversationelement and set button to active
         const conversationElement = document.getElementById('conversation-' + conversation.id);
@@ -328,6 +327,8 @@ function sendMessage() {
         chrome.runtime.sendMessage({ messages: conversation.messages });
 
     });
+    // disable the send button
+    buttonSendMessage.disabled = true;
 
     // Clear the input field
     inputForm.value = '';
@@ -470,9 +471,6 @@ function displayWelcomeMessage() {
     // append the welcome message to the chat wrapper
     chatWrapper.appendChild(welcomeMessage);
 }
-
-const sendMessageIcon = document.getElementById('send-message-icon');
-const loadingIndicator = document.getElementById('loading-indicator');
 
 // hide the loading indicator by default
 loadingIndicator.style.display = 'none';
