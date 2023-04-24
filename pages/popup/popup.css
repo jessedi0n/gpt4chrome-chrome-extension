@@ -76,45 +76,6 @@ p {
     transform: translate(-50%, -50%);
 }
 
-#chatHeaderButtonGroup {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-#chatHeaderOptions {
-    background-color: #2B2C2F;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-}
-
-#chatHeaderOptions:hover {
-    background-color: #444654;
-    transition: all 0.2s ease-in-out;
-}
-
-#chatHeaderDelete {
-    display: none;
-    background-color: #2B2C2F;
-    color: white;
-    border: none;
-    border-radius: 0.5rem;
-    width: 2rem;
-    height: 2rem;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-}
-
-#chatHeaderDelete:hover {
-    background-color: #444654;
-    transition: all 0.2s ease-in-out;
-}
-
 #chatWrapper {
     display: flex;
     flex-direction: column;
@@ -261,20 +222,6 @@ p {
 #button-send-message:disabled {
     background-color: #545454;
     transition: all 0.2s ease-in-out;
-}
-
-
-.form-control {
-    background-color: #444654 !important;
-    outline: none !important;
-    color: white !important;
-    box-shadow: none !important;
-}
-
-.form-control:focus {
-    background-color: #444654 !important;
-    outline: 1px solid white !important;
-    box-shadow: none !important;
 }
 
 #input-search {
