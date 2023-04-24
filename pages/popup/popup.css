@@ -39,13 +39,13 @@ p {
     transition: flex 0.3s ease-in-out;
 }
 
-#chatHeader {
+#chat-header {
     color: white;
     padding: 0.5rem;
     border-bottom: 2px solid #444654;
 }
 
-#chatHeaderWrapper {
+#chat-header-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -53,7 +53,7 @@ p {
     width: 100%;
 }
 
-#chatHeaderToggleConversationsButton {
+#toggle-conversations-button {
     background-color: #2B2C2F;
     color: white;
     border: none;
@@ -64,19 +64,19 @@ p {
     cursor: pointer;
 }
 
-#chatHeaderToggleConversationsButton:hover {
+#toggle-conversations-button:hover {
     background-color: #444654;
     transition: all 0.2s ease-in-out;
 }
 
-#chatHeaderTitle {
+#chat-header-title {
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
 }
 
-#chatWrapper {
+#chat-wrapper {
     display: flex;
     flex-direction: column;
     height: 100%;
@@ -241,7 +241,7 @@ p {
     box-shadow: none;
 }
 
-#conversationList {
+#conversation-list {
     display: flex;
     flex-direction: column;
     color: white;
@@ -262,21 +262,13 @@ p {
     padding: 0px !important;
 }
 
-#conversationListWrapper {
+#conversation-list-wrapper {
     display: flex;
     flex-direction: column;
     height: 100%;
     overflow-y: scroll;
     padding: 0 0.5rem;
     padding-top: 0.5rem;
-}
-
-#chatWrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow-y: scroll;
-    padding: 0 1rem;
 }
 
 #new-conversation-button {
@@ -301,7 +293,7 @@ p {
     padding: 0.5rem;
 }
 
-#clearConversationsButton {
+#clear-conversations-button {
     background-color: #2B2C2F;
     color: white;
     border: 2px solid #444654;
@@ -312,12 +304,12 @@ p {
     cursor: pointer;
 }
 
-#clearConversationsButton:hover {
+#clear-conversations-button:hover {
     background-color: #444654;
     transition: all 0.2s ease-in-out;
 }
 
-#optionsButton {
+#open-options-button {
     background-color: #2B2C2F;
     color: white;
     border: 2px solid #444654;
@@ -328,12 +320,12 @@ p {
     cursor: pointer;
 }
 
-#optionsButton:hover {
+#open-options-button:hover {
     background-color: #444654;
     transition: all 0.2s ease-in-out;
 }
 
-#githubButton {
+#open-github-button {
     background-color: #2B2C2F;
     color: white;
     width: 100%;
@@ -345,7 +337,7 @@ p {
     cursor: pointer;
 }
 
-#githubButton:hover {
+#open-github-button:hover {
     background-color: #444654;
     transition: all 0.2s ease-in-out;
 }
@@ -369,13 +361,13 @@ p {
     transition: all 0.2s ease-in-out;
 }
 
-.delete-icon {
+.delete-conversation-icon {
     color: white;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
 }
 
-.delete-icon:hover {
+.delete-conversation-icon:hover {
     display: inline;
     color: #b52d32;
     transition: all 0.2s ease-in-out;

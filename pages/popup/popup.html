@@ -13,7 +13,7 @@
 <body>
 
     <div id="popup">
-        <div id="conversationList">
+        <div id="conversation-list">
             <div id="conversation-top">
                 <div id="conversation-search">
                     <input id="input-search" type="text" placeholder="Search chats..." aria-label="search conversation">
@@ -24,37 +24,37 @@
                 </div>
             </div>
 
-            <div id="conversationListWrapper"></div>
+            <div id="conversation-list-wrapper"></div>
 
             <div id="conversationToolbar">
-                <button id="clearConversationsButton" type="button">
+                <button id="clear-conversations-button" type="button">
                     <i class="fa fa-trash"></i>
                 </button>
-                <button id="githubButton" type="button">
+                <button id="open-github-button" type="button">
                     <i class="fa-brands fa-github"></i>
                 </button>
-                <button id="optionsButton" type="button">
+                <button id="open-options-button" type="button">
                     <i class="fa fa-cog"></i>
                 </button>
             </div>
         </div>
         <div id="chat">
-            <div id="chatHeader">
-                <div id="chatHeaderWrapper">
-                    <button id="chatHeaderToggleConversationsButton" type="button">
-                        <i id="toggleConversationsIcon" class="fa fa-bars fa-sm"></i>
+            <div id="chat-header">
+                <div id="chat-header-wrapper">
+                    <button id="toggle-conversations-button" type="button">
+                        <i id="toggle-conversations-icon" class="fa fa-bars fa-sm"></i>
                     </button>
-                    <p id="chatHeaderTitle"></p>
+                    <p id="chat-header-title"></p>
                 </div>
             </div>
 
-            <div id="chatWrapper"></div>
+            <div id="chat-wrapper"></div>
 
             <div id="input-bar">
                 <textarea id="input-message" type="text" class="shadow-none me-2" placeholder="Whats on your mind?"
                     aria-label="input prompt" aria-describedby="button-send-message" rows="1">
                 </textarea>
-                <button id="button-send-message" type="button">
+                <button id="button-send-message" type="button" disabled>
                     <i id="send-message-icon" class="fa fa-paper-plane"></i>
                     <div id="loading-indicator" class="spinner-border spinner-border-sm" role="status">
                         <span class="visually-hidden">Loading...</span>

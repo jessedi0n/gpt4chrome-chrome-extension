@@ -1,16 +1,19 @@
-const conversationListWrapper = document.getElementById('conversationListWrapper');
+const conversationList = document.getElementById('conversation-list');
+const conversationListWrapper = document.getElementById('conversation-list-wrapper');
 const chat = document.getElementById('chat');
-const chatWrapper = document.getElementById('chatWrapper');
-const chatHeaderToggleConversations = document.getElementById('chatHeaderToggleConversationsButton');
-const toggleConversationsIcon = document.getElementById('toggleConversationsIcon');
-const chatHeaderTitle = document.getElementById('chatHeaderTitle');
+const chatWrapper = document.getElementById('chat-wrapper');
+const chatHeaderTitle = document.getElementById('chat-header-title');
+const toggleConversationsButton = document.getElementById('toggle-conversations-button');
+const toggleConversationsIcon = document.getElementById('toggle-conversations-icon');
 const inputForm = document.getElementById('input-message');
 const buttonSendMessage = document.getElementById('button-send-message');
 const sendMessageIcon = document.getElementById('send-message-icon');
 const loadingIndicator = document.getElementById('loading-indicator');
 const addConversationButton = document.getElementById('new-conversation-button');
-const clearConversationsButton = document.getElementById('clearConversationsButton');
+const clearConversationsButton = document.getElementById('clear-conversations-button');
 const inputSearch = document.getElementById('input-search');
+const openGithubButton = document.getElementById('open-github-button');
+const openOptionsButton = document.getElementById('open-options-button');
 
 let isLoading = false;
 let selectedConversation = 0;
@@ -85,7 +88,7 @@ function displayConversations(conversations) {
         const deleteIcon = document.createElement('i');
         deleteIcon.classList.add('fa');
         deleteIcon.classList.add('fa-trash');
-        deleteIcon.classList.add('delete-icon');
+        deleteIcon.classList.add('delete-conversation-icon');
         deleteIcon.classList.add('d-none');
 
         // add event listener to delete icon to delete the conversation on click
@@ -185,7 +188,8 @@ clearConversationsButton.addEventListener('click', () => {
 addConversationButton.addEventListener('click', () => {
     // get the conversation list
     chrome.storage.local.get(['conversations'], (result) => {
-        // create a new conversation with a unique id
+
+        // create a new conversation
         const newConversation = {
             id: result.conversations.length,
             name: 'Chat ' + (result.conversations.length + 1),
@@ -215,7 +219,7 @@ addConversationButton.addEventListener('click', () => {
 });
 
 // Toggle the conversation list on and off when the toggle button is clicked
-chatHeaderToggleConversations.addEventListener('click', function () {
+toggleConversationsButton.addEventListener('click', function () {
     // if conversation list has class hidden, show it
     if (conversationList.classList.contains('chats-hidden')) {
         conversationList.classList.remove('chats-hidden');
@@ -272,9 +276,6 @@ function showMessagesByConversation(conversationId) {
 
 // Focus the input field by default
 inputForm.focus();
-
-// Disable the send button by default
-buttonSendMessage.disabled = true;
 
 // Enable the send button when the user types something in the input field
 inputForm.addEventListener('keyup', () => {
@@ -334,7 +335,10 @@ function sendMessage() {
     inputForm.value = '';
 
     // Toggle the send button and loading indicator
-    toggleSendButtonAndLoadingIndicator();
+    toggleLoadingIndicator();
+
+    // set the send button to disabled
+    buttonSendMessage.disabled = true;
 
     // scroll to the bottom of the chat wrapper
     chatWrapper.scrollTop = chatWrapper.scrollHeight;
@@ -476,15 +480,13 @@ function displayWelcomeMessage() {
 loadingIndicator.style.display = 'none';
 
 // disable send button when sending a message and display the loading indicator
-function toggleSendButtonAndLoadingIndicator() {
+function toggleLoadingIndicator() {
     if (!isLoading) {
         sendMessageIcon.style.display = 'inline-block';
         loadingIndicator.style.display = 'none';
-        buttonSendMessage.disabled = false;
     } else {
         sendMessageIcon.style.display = 'none';
         loadingIndicator.style.display = 'inline-block';
-        buttonSendMessage.disabled = true;
     }
 }
 
@@ -494,7 +496,7 @@ chrome.runtime.onMessage.addListener(({ answer, error }) => {
     if (answer) {
         // add the assistant message to the chat wrapper
         addAssistantMessage(answer);
-        // add the assistant message to the conversation in the storage
+        // save the message to the selected conversation
         saveMessageToSelectedConversation(answer, 'assistant');
     } else if (error) {
         addAssistantMessage(error);
@@ -502,7 +504,11 @@ chrome.runtime.onMessage.addListener(({ answer, error }) => {
     // disable the loading indicator
     isLoading = false;
     // toggle the send button and loading indicator
-    toggleSendButtonAndLoadingIndicator();
+    toggleLoadingIndicator();
+
+    // set the send button to disabled
+    buttonSendMessage.disabled = true;
+
     // scroll to the bottom of the chat wrapper smoothly
     chatWrapper.scrollTop = chatWrapper.scrollHeight;
 });
@@ -523,7 +529,7 @@ inputSearch.addEventListener('input', () => {
         // if the conversation name contains the search value
         if (conversationName.includes(searchValue)) {
             // show the conversation list item
-            conversationListItem.style.display = 'block';
+            conversationListItem.style.display = 'flex';
         } else {
             // hide the conversation list item
             conversationListItem.style.display = 'none';
@@ -532,11 +538,11 @@ inputSearch.addEventListener('input', () => {
 });
 
 // open options page when clicking on the options button
-optionsButton.addEventListener('click', () => {
+openOptionsButton.addEventListener('click', () => {
     chrome.runtime.openOptionsPage();
 });
 
 // open github page when clicking on the github button
-githubButton.addEventListener('click', () => {
+openGithubButton.addEventListener('click', () => {
     window.open('https://github.com/jessedi0n/gpt4chrome');
 });
