@@ -1,6 +1,6 @@
 # GPT4Chrome
 
-A Chrome extension that brings the power of OpenAI's GPT models to every web page you visit. With GPT4Chrome, you can have a seamless chat experience, without ever leaving your favorite website. Whether you're researching a topic or just looking for some AI-powered fun, GPT4Chrome is always just a click away.
+A Chrome extension that brings the power of OpenAI's GPT models to every web page you visit. With GPT4Chrome, you can have a seamless ChatGPT experience, without ever leaving your favorite website. Whether you're researching a topic or just looking for some AI-powered fun, GPT4Chrome is always just a click away.
 
 ## Features
 
