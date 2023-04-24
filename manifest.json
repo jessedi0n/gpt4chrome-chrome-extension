@@ -2,7 +2,7 @@
     "manifest_version": 3,
     "name": "GPT4Chrome",
     "version": "0.1",
-    "description": "With GPT4Chrome, you can have a seamless ChatGPT experience, without ever leaving your favorite website.",
+    "description": "Have a seamless ChatGPT experience, without ever leaving your favorite website.",
     "author": "jessedi0n",
     "icons": {
         "16": "assets/icons/icon-16.png",
