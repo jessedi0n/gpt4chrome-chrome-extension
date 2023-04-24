@@ -5,15 +5,15 @@ const chatWrapper = document.getElementById('chat-wrapper');
 const chatHeaderTitle = document.getElementById('chat-header-title');
 const toggleConversationsButton = document.getElementById('toggle-conversations-button');
 const toggleConversationsIcon = document.getElementById('toggle-conversations-icon');
+const inputSearch = document.getElementById('input-search');
 const inputForm = document.getElementById('input-message');
-const buttonSendMessage = document.getElementById('button-send-message');
 const sendMessageIcon = document.getElementById('send-message-icon');
-const loadingIndicator = document.getElementById('loading-indicator');
+const buttonSendMessage = document.getElementById('button-send-message');
 const addConversationButton = document.getElementById('new-conversation-button');
 const clearConversationsButton = document.getElementById('clear-conversations-button');
-const inputSearch = document.getElementById('input-search');
 const openGithubButton = document.getElementById('open-github-button');
 const openOptionsButton = document.getElementById('open-options-button');
+const loadingIndicator = document.getElementById('loading-indicator');
 
 let isLoading = false;
 let selectedConversation = 0;
@@ -348,11 +348,13 @@ function sendMessage() {
 function addUserMessage(message) {
     // create a new user message element
     const userMessage = document.createElement('div');
-    userMessage.classList.add('user-message');
+    userMessage.classList.add('message');
+    userMessage.classList.add('user');
 
     // create message wrapper and append
     const messageWrapper = document.createElement('div');
-    messageWrapper.classList.add('message-wrapper-user');
+    messageWrapper.classList.add('message-wrapper');
+    messageWrapper.classList.add('user');
     userMessage.appendChild(messageWrapper);
 
     // create message text and append
@@ -369,7 +371,8 @@ function addUserMessage(message) {
 function addAssistantMessage(message) {
     // create a new assistant message element
     const assistantMessage = document.createElement('div');
-    assistantMessage.classList.add('assistant-message');
+    assistantMessage.classList.add('message');
+    assistantMessage.classList.add('assistant');
     // add id to the message by seaching for the the size of the chat wrapper
     assistantMessage.id = 'message-' + chatWrapper.childElementCount;
 
@@ -387,7 +390,9 @@ function addAssistantMessage(message) {
 
     // create message wrapper and append
     const messageWrapper = document.createElement('div');
-    messageWrapper.classList.add('message-wrapper-assistant');
+    messageWrapper.classList.add('message-wrapper');
+    messageWrapper.classList.add('assistant');
+
     assistantMessage.appendChild(messageWrapper);
 
     // create message text and append
@@ -501,9 +506,10 @@ chrome.runtime.onMessage.addListener(({ answer, error }) => {
     } else if (error) {
         addAssistantMessage(error);
     }
-    // disable the loading indicator
+
     isLoading = false;
-    // toggle the send button and loading indicator
+
+    // toggle loading indicator
     toggleLoadingIndicator();
 
     // set the send button to disabled
@@ -523,6 +529,7 @@ inputSearch.addEventListener('input', () => {
 
     // loop through all the conversation list items
     conversationListItems.forEach((conversationListItem) => {
+
         // get the conversation name
         const conversationName = conversationListItem.innerText.toLowerCase();
 

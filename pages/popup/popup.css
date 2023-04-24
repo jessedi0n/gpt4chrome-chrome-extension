@@ -1,6 +1,4 @@
 body {
-    margin: 0;
-    padding: 0;
     width: 640px;
     height: 480px;
 }
@@ -22,6 +20,11 @@ h1 {
 p {
     margin: 0px !important;
     padding: 0px !important;
+}
+
+*:focus {
+    outline: none;
+    box-shadow: none;
 }
 
 #popup {
@@ -53,6 +56,21 @@ p {
     width: 100%;
 }
 
+#chat-header-title {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+#chat-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow-y: scroll;
+    padding: 0 1rem;
+}
+
 #toggle-conversations-button {
     background-color: #2B2C2F;
     color: white;
@@ -69,21 +87,6 @@ p {
     transition: all 0.2s ease-in-out;
 }
 
-#chat-header-title {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-}
-
-#chat-wrapper {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    overflow-y: scroll;
-    padding: 0 1rem;
-}
-
 #welcome-message {
     display: flex;
     flex-direction: column;
@@ -95,18 +98,17 @@ p {
     padding-bottom: 2rem;
 }
 
-.user-message {
+.message {
     display: flex;
-    justify-content: end;
     margin-bottom: 1rem;
-
 }
 
-.assistant-message {
-    display: flex;
-    justify-content: start;
-    margin-bottom: 1rem;
+.message.user {
+    justify-content: end;
+}
 
+.message.assistant {
+    justify-content: start;
 }
 
 .avatar {
@@ -125,9 +127,8 @@ p {
     font-size: small;
 }
 
-.message-wrapper-user {
+.message-wrapper {
     display: inline;
-    background-color: #2B2C2F;
     border-radius: 1rem;
     padding: 0.5rem 1rem;
     box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
@@ -135,13 +136,12 @@ p {
 
 }
 
-.message-wrapper-assistant {
-    display: inline;
+.message-wrapper.user {
+    background-color: #2B2C2F;
+}
+
+.message-wrapper.assistant {
     background-color: #444654;
-    border-radius: 1rem;
-    padding: 0.5rem 1rem;
-    box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 8px;
-    max-width: 80%;
 }
 
 .message-text {
@@ -198,11 +198,6 @@ p {
     border: 2px solid #444654;
 }
 
-#input-message:focus {
-    outline: none;
-    box-shadow: none;
-}
-
 #button-send-message {
     background-color: #2B2C2F;
     color: white;
@@ -234,11 +229,6 @@ p {
     border-radius: 0.5rem;
     padding-left: 0.5rem;
     margin-bottom: 0.5rem;
-}
-
-#input-search:focus {
-    outline: none;
-    box-shadow: none;
 }
 
 #conversation-list {
@@ -285,7 +275,7 @@ p {
     transition: all 0.2s ease-in-out;
 }
 
-#conversationToolbar {
+#conversation-toolbar {
     display: flex;
     justify-content: space-between;
     align-items: center;
