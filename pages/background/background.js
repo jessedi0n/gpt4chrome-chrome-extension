@@ -1,7 +1,7 @@
 // on first install open the options page to set the API key
 chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason == "install") {
-        chrome.tabs.create({ url: "options/options.html" });
+        chrome.tabs.create({ url: "pages/options/options.html" });
     }
 });
 
