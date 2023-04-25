@@ -174,11 +174,9 @@ clearConversationsButton.addEventListener('click', () => {
     chrome.storage.local.set({
         conversations: []
     });
+
     // initialize a new conversation
     initConversation();
-
-    // set the selected conversation to 0
-    selectedConversation = 0;
 
     // remove the search input value
     inputSearch.value = '';
