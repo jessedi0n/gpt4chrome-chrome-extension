@@ -1,9 +1,10 @@
 <div align="center">
     <img src="https://github.com/jessedi0n/gpt4chrome/blob/main/doc/images/gpt4chrome-logo.png?raw=true" alt="GPT4Chrome - Logo" />
 <h1>GPT4Chrome</h1>
-</div>
 
 A Chrome extension that allows a seamless ChatGPT experience, without ever leaving your favorite website. Whether you're researching a topic or just looking for some AI-powered fun, GPT4Chrome is always just a click away.
+
+</div>
 
 ## Features
 
