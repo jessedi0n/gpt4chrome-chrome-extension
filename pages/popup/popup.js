@@ -78,7 +78,7 @@ function displayConversations(conversations) {
         conversationIcon.classList.add('fa-regular');
         conversationIcon.classList.add('fa-message');
         conversationIcon.classList.add('me-2');
-        conversationWrapper.appendChild(conversationIcon);
+        conversationElement.appendChild(conversationIcon);
 
         // create a new conversation name element
         const conversationName = document.createElement('span');
@@ -171,20 +171,6 @@ function deleteConversation(conversationId) {
         initConversation();
     });
 }
-
-// // clear the conversation list when the button is clicked
-// clearConversationsButton.addEventListener('click', () => {
-//     // clear the conversation list
-//     chrome.storage.local.set({
-//         conversations: []
-//     });
-
-//     // initialize a new conversation
-//     initConversation();
-
-//     // remove the search input value
-//     inputSearch.value = '';
-// });
 
 // add a new conversation when the button is clicked
 addConversationButton.addEventListener('click', () => {
@@ -591,4 +577,129 @@ window.onclick = function (event) {
     if (event.target == deleteModal) {
         deleteModal.style.display = "none";
     }
+}
+
+// on double click on the chat header title the conversation name can be edited
+chatHeaderTitle.addEventListener('dblclick', () => {
+    // get the conversation name
+    const conversationName = chatHeaderTitle.innerText;
+
+    // remove the conversation name
+    chatHeaderTitle.innerText = '';
+
+    // create input wrapper
+    const inputGroup = document.createElement('div');
+    inputGroup.className = 'rename-input-wrapper';
+
+    // create an input
+    const input = document.createElement('input');
+    input.id = 'rename-conversation-input';
+    input.type = 'text';
+    input.value = conversationName;
+
+    inputGroup.appendChild(input);
+
+    // enable the save button when typing in the input. the the name has not changed the save button will be disabled
+    input.addEventListener('input', () => {
+        // get the save button
+        const saveButton = document.getElementById('rename-conversation-save-button');
+
+        // if the input value is not equal to the conversation name
+        if (input.value !== conversationName && input.value !== '') {
+            // enable the save button
+            saveButton.disabled = false;
+        } else {
+            // disable the save button
+            saveButton.disabled = true;
+        }
+    });
+
+    // create a save button
+    const saveButton = document.createElement('button');
+    saveButton.id = 'rename-conversation-save-button';
+    saveButton.disabled = true;
+
+    // add icon
+    const saveButtonIcon = document.createElement('i');
+    saveButtonIcon.className = 'fas fa-check';
+
+    saveButton.appendChild(saveButtonIcon);
+
+    // on click save button
+    saveButton.addEventListener('click', () => {
+        // save the new conversation name
+        saveRenameConversation(input.value);
+    });
+
+    inputGroup.appendChild(saveButton);
+
+    // create a cancel button
+    const cancelButton = document.createElement('button');
+    cancelButton.id = 'rename-conversation-cancel-button';
+
+    // add icon
+    const cancelButtonIcon = document.createElement('i');
+    cancelButtonIcon.className = 'fas fa-times';
+
+    cancelButton.appendChild(cancelButtonIcon);
+
+    // on click cancel button
+    cancelButton.addEventListener('click', () => {
+        // remove the input
+        chatHeaderTitle.removeChild(chatHeaderTitle.firstChild);
+
+        // display the conversation name
+        chatHeaderTitle.innerText = conversationName;
+    });
+
+    inputGroup.appendChild(cancelButton);
+
+    // on keyup
+    input.addEventListener('keyup', (e) => {
+        // if the key is enter
+        if (e.key === 'Enter') {
+            // save the new conversation name
+            saveRenameConversation(input.value);
+        }
+    });
+
+    // append the input to the chat header title
+    chatHeaderTitle.appendChild(inputGroup);
+
+    // focus the input
+    input.focus();
+});
+
+// save the new conversation name
+function saveRenameConversation(conversationName) {
+    // save the new conversation name to the storage
+    chrome.storage.local.get(['conversations'], (result) => {
+        result.conversations[selectedConversation].name = conversationName;
+
+        // save the new conversation name to the storage
+        chrome.storage.local.set({
+            conversations: result.conversations
+        });
+    });
+
+    // remove the input
+    chatHeaderTitle.removeChild(chatHeaderTitle.firstChild);
+
+    // display the conversation name
+    chatHeaderTitle.innerText = conversationName;
+
+    // update the conversation list item
+    updateConversationListItem(selectedConversation, conversationName);
+}
+
+// update the conversation list item
+function updateConversationListItem(conversationId, conversationName) {
+    // get the conversation list item
+    const conversationListItem = document.getElementById(`conversation-${conversationId}`);
+
+    // get the conversation name element
+    const conversationNameElement = conversationListItem.querySelector('.conversation-name');
+
+    // update the conversation name
+    conversationNameElement.innerText = conversationName;
 }

@@ -1,8 +1,3 @@
-body {
-    width: 640px;
-    height: 480px;
-}
-
 h1,
 h2,
 h3,
@@ -29,8 +24,8 @@ p {
 
 #popup {
     display: flex;
-    height: 100%;
-    transition: all 0.5s ease-in-out;
+    width: 640px;
+    height: 480px;
 }
 
 #chat {
@@ -39,7 +34,6 @@ p {
     background-color: #343541;
     width: 100%;
     height: 100%;
-    transition: flex 0.3s ease-in-out;
 }
 
 #chat-header {
@@ -58,9 +52,15 @@ p {
 
 #chat-header-title {
     position: absolute;
+    text-align: center;
+    width: 80%;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
+    font-weight: bold;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 #chat-wrapper {
@@ -236,7 +236,7 @@ p {
     flex-direction: column;
     color: white;
     background-color: #2B2C2F;
-    width: 220px;
+    max-width: 200px;
     height: 100%;
     transition: all 0.3s ease-in-out;
 }
@@ -248,8 +248,7 @@ p {
 }
 
 .chats-hidden {
-    width: 0px !important;
-    padding: 0px !important;
+    display: none !important;
 }
 
 #conversation-list-wrapper {
@@ -260,6 +259,38 @@ p {
     padding: 0 0.5rem;
     padding-top: 0.5rem;
 }
+
+.conversation {
+    position: relative;
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    background-color: #2B2C2F;
+    color: white;
+    border: 2px solid #444654;
+    border-radius: 0.5rem;
+    padding: 0.5rem;
+    margin-bottom: 0.5rem;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.conversation:hover {
+    background-color: #444654;
+    transition: all 0.2s ease-in-out;
+}
+
+.conversation.active {
+    background-color: #444654;
+}
+
+.conversation-wrapper {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.conversation-name {}
 
 #new-conversation-button {
     border: 2px solid #444654;
@@ -332,26 +363,9 @@ p {
     transition: all 0.2s ease-in-out;
 }
 
-.conversation {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #2B2C2F;
-    color: white;
-    border: 2px solid #444654;
-    border-radius: 0.5rem;
-    padding: 0.5rem;
-    margin-bottom: 0.5rem;
-    transition: all 0.2s ease-in-out;
-    cursor: pointer;
-}
-
-.conversation:hover {
-    background-color: #444654;
-    transition: all 0.2s ease-in-out;
-}
-
 .delete-conversation-icon {
+    position: absolute;
+    right: 0.5rem;
     color: white;
     transition: all 0.2s ease-in-out;
     cursor: pointer;
@@ -361,10 +375,6 @@ p {
     display: inline;
     color: #b52d32;
     transition: all 0.2s ease-in-out;
-}
-
-.active {
-    background-color: #444654;
 }
 
 .modal {
@@ -421,4 +431,62 @@ p {
 
 #delete-button:hover {
     background-color: #d3353b;
+}
+
+#rename-conversation-input {
+    color: white;
+    box-shadow: none;
+    text-decoration: none;
+    background-color: #444654;
+    border: 2px solid #444654;
+    border-radius: 0.5rem;
+    margin-right: 0.5rem;
+}
+
+.rename-input-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#rename-conversation-cancel-button {
+    background-color: #2B2C2F;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+#rename-conversation-cancel-button:hover {
+    background-color: #444654;
+    transition: all 0.2s ease-in-out;
+}
+
+#rename-conversation-save-button {
+    background-color: #2B2C2F;
+    color: white;
+    border: none;
+    border-radius: 0.5rem;
+    width: 2rem;
+    height: 2rem;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+    margin-right: 0.25rem;
+}
+
+#rename-conversation-save-button:disabled {
+    background-color: #545454;
+    transition: all 0.2s ease-in-out;
+}
+
+#rename-conversation-save-button:disabled:hover {
+    background-color: #545454;
+    cursor: not-allowed;
+}
+
+#rename-conversation-save-button:hover {
+    background-color: #444654;
 }
