@@ -14,6 +14,10 @@ const clearConversationsButton = document.getElementById('clear-conversations-bu
 const openGithubButton = document.getElementById('open-github-button');
 const openOptionsButton = document.getElementById('open-options-button');
 const loadingIndicator = document.getElementById('loading-indicator');
+const deleteModal = document.getElementById("deleteModal");
+const cancelButton = document.getElementById("cancel-button");
+const deleteButton = document.getElementById("delete-button");
+
 
 let isLoading = false;
 let selectedConversation = 0;
@@ -168,19 +172,19 @@ function deleteConversation(conversationId) {
     });
 }
 
-// clear the conversation list when the button is clicked
-clearConversationsButton.addEventListener('click', () => {
-    // clear the conversation list
-    chrome.storage.local.set({
-        conversations: []
-    });
+// // clear the conversation list when the button is clicked
+// clearConversationsButton.addEventListener('click', () => {
+//     // clear the conversation list
+//     chrome.storage.local.set({
+//         conversations: []
+//     });
 
-    // initialize a new conversation
-    initConversation();
+//     // initialize a new conversation
+//     initConversation();
 
-    // remove the search input value
-    inputSearch.value = '';
-});
+//     // remove the search input value
+//     inputSearch.value = '';
+// });
 
 // add a new conversation when the button is clicked
 addConversationButton.addEventListener('click', () => {
@@ -551,3 +555,40 @@ openOptionsButton.addEventListener('click', () => {
 openGithubButton.addEventListener('click', () => {
     window.open('https://github.com/jessedi0n/gpt4chrome');
 });
+
+// When the user clicks on the clear button, show the modal
+clearConversationsButton.onclick = function () {
+    deleteModal.style.display = "flex";
+}
+
+// When the user clicks on cancel, close the modal
+cancelButton.onclick = function () {
+    deleteModal.style.display = "none";
+}
+
+// When the user clicks on delete, clear the conversations
+deleteButton.onclick = function () {
+    // clear the conversation list
+    chrome.storage.local.set({
+        conversations: []
+    });
+
+    // reset the selected conversation
+    selectedConversation = 0;
+
+    // initialize a new conversation
+    initConversation();
+
+    // remove the search input value
+    inputSearch.value = '';
+
+    // close the modal
+    deleteModal.style.display = "none";
+}
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function (event) {
+    if (event.target == deleteModal) {
+        deleteModal.style.display = "none";
+    }
+}

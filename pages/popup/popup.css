@@ -366,3 +366,59 @@ p {
 .active {
     background-color: #444654;
 }
+
+.modal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: #343541 !important;
+    color: white !important;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 50% !important;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.modal-button {
+    background-color: #2B2C2F;
+    color: white;
+    width: 100%;
+    height: 2rem;
+    border: none;
+    border-radius: 0.5rem;
+    margin: 0 0.5rem;
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.modal-button:hover {
+    background-color: #444654;
+    transition: all 0.2s ease-in-out;
+}
+
+#delete-button {
+    background-color: #b52d32;
+}
+
+#delete-button:hover {
+    background-color: #d3353b;
+}
