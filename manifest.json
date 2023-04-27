@@ -1,13 +1,13 @@
 {
     "manifest_version": 3,
     "name": "GPT4Chrome",
-    "version": "0.1",
+    "version": "0.1.0",
     "description": "Have a seamless ChatGPT experience, without ever leaving your favorite website.",
     "author": "jessedi0n",
     "icons": {
-        "16": "assets/icons/icon-16.png",
-        "32": "assets/icons/icon-32.png",
-        "96": "assets/icons/icon-96.png"
+        "16": "dist/assets/icons/icon-16.png",
+        "32": "dist/assets/icons/icon-32.png",
+        "96": "dist/assets/icons/icon-96.png"
     },
     "host_permissions": [
         "https://api.openai.com/v1/completions"
@@ -17,10 +17,10 @@
         "tabs"
     ],
     "background": {
-        "service_worker": "pages/background/background.js"
+        "service_worker": "dist/pages/background/background.js"
     },
     "action": {
-        "default_popup": "pages/popup/popup.html"
+        "default_popup": "src/pages/popup/popup.html"
     },
-    "options_page": "pages/options/options.html"
+    "options_page": "src/pages/options/options.html"
 }

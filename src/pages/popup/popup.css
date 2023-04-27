@@ -111,6 +111,13 @@ p {
     justify-content: start;
 }
 
+.code-block {
+    /* background-color: #343541; */
+    padding: 0.5rem;
+    margin-top: 0.5rem;
+    border-radius: 0.5rem;
+}
+
 .avatar {
     display: flex;
     justify-content: center;

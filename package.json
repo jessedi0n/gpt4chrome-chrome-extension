@@ -1,0 +1,30 @@
+{
+  "name": "gpt4chrome",
+  "version": "0.1.0",
+  "description": "Have a seamless ChatGPT experience, without ever leaving your favorite website.",
+  "main": "popup.js",
+  "directories": {
+    "doc": "doc"
+  },
+  "scripts": {
+    "build": "webpack"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/jessedi0n/gpt4chrome.git"
+  },
+  "author": "jessedi0n",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/jessedi0n/gpt4chrome/issues"
+  },
+  "homepage": "https://github.com/jessedi0n/gpt4chrome#readme",
+  "dependencies": {
+    "highlight.js": "^11.7.0"
+  },
+  "devDependencies": {
+    "copy-webpack-plugin": "^11.0.0",
+    "webpack": "^5.81.0",
+    "webpack-cli": "^5.0.2"
+  }
+}
