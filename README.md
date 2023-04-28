@@ -26,7 +26,7 @@ To use this extension, you will need an API key from OpenAI. Without, the extens
 
 Before you begin the installation, ensure you have met the following requirements:
 
-- You have installed the latest version of [Node.js](https://nodejs.org/en/).
+- You have installed  [Node.js](https://nodejs.org/en/) (v14 or higher).
 - You have installed a chromium-based browser such as [Google Chrome](https://www.google.com/chrome/), [Microsoft Edge](https://www.microsoft.com/en-us/edge) or [Brave](https://brave.com/).
 
 ## Installation
