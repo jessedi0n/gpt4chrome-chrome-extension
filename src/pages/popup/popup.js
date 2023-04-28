@@ -1,3 +1,5 @@
+import hljs from 'highlight.js';
+
 const conversationList = document.getElementById('conversation-list');
 const conversationListWrapper = document.getElementById('conversation-list-wrapper');
 const chat = document.getElementById('chat');
@@ -69,24 +71,20 @@ function displayConversations(conversations) {
         // give the conversation element a unique id
         conversationElement.id = 'conversation-' + conversation.id;
 
-        // create new conversation wrapper element
-        const conversationWrapper = document.createElement('div');
-        conversationWrapper.classList.add('conversation-wrapper');
-
         // add message icon to the conversation element
         const conversationIcon = document.createElement('i');
         conversationIcon.classList.add('fa-regular');
         conversationIcon.classList.add('fa-message');
         conversationIcon.classList.add('me-2');
+
         conversationElement.appendChild(conversationIcon);
 
-        // create a new conversation name element
-        const conversationName = document.createElement('span');
+        // create new conversation name element
+        const conversationName = document.createElement('div');
         conversationName.classList.add('conversation-name');
         conversationName.innerText = conversation.name;
-        conversationWrapper.appendChild(conversationName);
 
-        conversationElement.appendChild(conversationWrapper);
+        conversationElement.appendChild(conversationName);
 
         // add a delete icon to the conversation element that shows on hover
         const deleteIcon = document.createElement('i');
@@ -386,7 +384,50 @@ function addAssistantMessage(message) {
     // create message text and append
     const messageText = document.createElement('div');
     messageText.classList.add('message-text');
-    messageText.innerText = message;
+
+    // if the text contains code parts ``` code ```  wrap the parts in a code block
+    if (message.includes('```')) {
+
+        const codeParts = message.split('```');
+
+        codeParts.forEach((part, index) => {
+            // if the index is even, add the text to the message
+            if (index % 2 == 0) {
+                // remove new line from the beginning of the string
+                if (part.startsWith('\n')) {
+                    part = part.substring(1);
+                }
+                // create text element and append
+                const text = document.createElement('span');
+                text.innerText = part;
+                messageText.appendChild(text);
+            } else {
+                // create a pre element and append
+                const codeBlock = document.createElement('pre');
+                codeBlock.classList.add('code-block');
+
+                // create a code element and append
+                const code = document.createElement('code');
+
+                // get the language of the code block and remove it from the string
+                const language = part.split('\n')[0];
+                part = part.replace(language + '\n', '');
+
+                // add the highlighted code to the code block
+                code.classList.add('hljs');
+                code.innerHTML = hljs.highlightAuto(part).value;
+
+                // append the code to the code block
+                codeBlock.appendChild(code);
+
+                // append the code block to the message text
+                messageText.appendChild(codeBlock);
+            }
+        });
+    } else {
+        messageText.innerText = message;
+    }
+
     messageWrapper.appendChild(messageText);
 
     // create action row and append
@@ -397,6 +438,11 @@ function addAssistantMessage(message) {
 
     // append the assistant message to the chat wrapper
     chatWrapper.appendChild(assistantMessage);
+}
+
+// highlight the code
+function highlight(code, language) {
+    return hljs.highlight(code, { language: language }).value;
 }
 
 // creates and returns a copy to clipboard button
