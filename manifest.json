@@ -20,7 +20,7 @@
         "service_worker": "dist/pages/background/background.js"
     },
     "action": {
-        "default_popup": "src/pages/popup/popup.html"
+        "default_popup": "dist/pages/popup/popup.html"
     },
-    "options_page": "src/pages/options/options.html"
+    "options_page": "dist/pages/options/options.html"
 }
