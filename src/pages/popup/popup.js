@@ -402,8 +402,11 @@ function addAssistantMessage(message) {
                 text.innerText = part;
                 messageText.appendChild(text);
             } else {
-                // create code block and append
+                // create a pre element and append
                 const codeBlock = document.createElement('pre');
+                codeBlock.classList.add('code-block');
+
+                // create a code element and append
                 const code = document.createElement('code');
 
                 // get the language of the code block and remove it from the string
@@ -412,11 +415,12 @@ function addAssistantMessage(message) {
 
                 // add the highlighted code to the code block
                 code.classList.add('hljs');
-                code.classList.add('code-block');
                 code.innerHTML = hljs.highlightAuto(part).value;
 
+                // append the code to the code block
                 codeBlock.appendChild(code);
 
+                // append the code block to the message text
                 messageText.appendChild(codeBlock);
             }
         });

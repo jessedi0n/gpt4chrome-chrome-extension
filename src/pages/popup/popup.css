@@ -111,9 +111,8 @@ p {
 }
 
 .code-block {
-    /* background-color: #343541; */
-    padding: 0.5rem;
-    margin-top: 0.5rem;
+    display: grid;
+    margin: 0;
     border-radius: 0.5rem;
 }
 
@@ -242,8 +241,7 @@ p {
     flex-direction: column;
     color: white;
     background-color: #2B2C2F;
-    width: 200px;
-    /* height: 100%; */
+    width: 160px;
     transition: all 0.3s ease-in-out;
 }
 
