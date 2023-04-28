@@ -290,13 +290,15 @@ p {
     background-color: #444654;
 }
 
-.conversation-wrapper {
+.conversation.active .conversation-name {
+    font-weight: bold;
+}
+
+.conversation-name {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
 }
-
-.conversation-name {}
 
 #new-conversation-button {
     border: 2px solid #444654;

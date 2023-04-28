@@ -71,24 +71,20 @@ function displayConversations(conversations) {
         // give the conversation element a unique id
         conversationElement.id = 'conversation-' + conversation.id;
 
-        // create new conversation wrapper element
-        const conversationWrapper = document.createElement('div');
-        conversationWrapper.classList.add('conversation-wrapper');
-
         // add message icon to the conversation element
         const conversationIcon = document.createElement('i');
         conversationIcon.classList.add('fa-regular');
         conversationIcon.classList.add('fa-message');
         conversationIcon.classList.add('me-2');
+
         conversationElement.appendChild(conversationIcon);
 
-        // create a new conversation name element
-        const conversationName = document.createElement('span');
+        // create new conversation name element
+        const conversationName = document.createElement('div');
         conversationName.classList.add('conversation-name');
         conversationName.innerText = conversation.name;
-        conversationWrapper.appendChild(conversationName);
 
-        conversationElement.appendChild(conversationWrapper);
+        conversationElement.appendChild(conversationName);
 
         // add a delete icon to the conversation element that shows on hover
         const deleteIcon = document.createElement('i');
@@ -401,7 +397,10 @@ function addAssistantMessage(message) {
                 if (part.startsWith('\n')) {
                     part = part.substring(1);
                 }
-                messageText.innerHTML += part;
+                // create text element and append
+                const text = document.createElement('span');
+                text.innerText = part;
+                messageText.appendChild(text);
             } else {
                 // create code block and append
                 const codeBlock = document.createElement('pre');
