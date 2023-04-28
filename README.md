@@ -13,7 +13,8 @@ A Chrome extension that allows a seamless ChatGPT experience, without ever leavi
 - User-friendly and modern layout for easy navigation and interaction
 - Seamless accessibility from any website
 - Conversations are automatically saved for easy access at a later time
-- Shareable responses with the click of a button
+- Syntax highlighted code for better code readability and understanding
+- Save responses to your clipboard with a single click
 - Multiple model options to choose between
 
 ### Note
