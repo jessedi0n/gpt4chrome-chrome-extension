@@ -1,7 +1,7 @@
 // on first install open the options page to set the API key
 chrome.runtime.onInstalled.addListener(function (details) {
     if (details.reason == "install") {
-        chrome.tabs.create({ url: "dist/pages/options/options.html" });
+        chrome.runtime.openOptionsPage();
     }
 });
 
@@ -11,69 +11,97 @@ function defaultSystemMessage() {
     return systemMessage;
 }
 
-// listen for a request from the content script
+// listen for messages from the popup
 chrome.runtime.onMessage.addListener(async function (request) {
-    // get the API key from local storage
-    let apiKey = await new Promise(resolve => chrome.storage.local.get(['apiKey'], result => resolve(result.apiKey)));
+    try {
+        // get the API key and model from the storage
+        const { apiKey, apiModel } = await getStorageData(['apiKey', 'apiModel']);
+        const currentConversation = request.messages || [];
 
-    // get the API model from local storage
-    let apiModel = await new Promise(resolve => chrome.storage.local.get(['apiModel'], result => resolve(result.apiModel)));
+        if (!apiKey) {
+            throw new Error('API key is missing or invalid');
+        }
 
-    // check if the request contains a message that the user sent a new message
-    if (request.messages) {
+        if (!apiModel) {
+            throw new Error('API model is missing or invalid');
+        }
 
-        // initialize the message array with the default system message
-        let conversation = [
-            { role: "system", content: defaultSystemMessage() }
+        if (!Array.isArray(currentConversation)) {
+            throw new Error('Conversation is not an array');
+        }
+
+        // add the default system message to the conversation
+        const conversation = [
+            { role: 'system', content: defaultSystemMessage() },
+            ...currentConversation,
         ];
 
-        // Add the current converversation to the message array
-        currentConversation = conversation.concat(request.messages);
+        // send the request to the OpenAI API
+        const response = await sendApiRequest(apiKey, apiModel, conversation);
 
-        try {
-            // send the request containing the messages to the OpenAI API
-            let response = await fetch('https://api.openai.com/v1/chat/completions', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${apiKey}`
-                },
-                body: JSON.stringify({
-                    "model": apiModel,
-                    "messages": currentConversation,
-                })
-            });
-
-            // check if the API response is ok, else throw an error
-            if (!response.ok) {
-                throw new Error(`Failed to fetch. Status code: ${response.status}`);
-            }
-
-            // get the data from the API response as json
-            let data = await response.json();
-
-            // check if the API response contains an answer
-            if (data && data.choices && data.choices.length > 0) {
-                // get the answer from the API response
-                let message = data.choices[0].message.content;
-
-                // send the answer back to the content script
-                chrome.runtime.sendMessage({ answer: message });
-
-                // Add the response from the assistant to the message array
-                conversation.push({ role: "assistant", content: message });
-            }
-        } catch (error) {
-            console.log(error);
-
-            // send error message back to the content script
-            chrome.runtime.sendMessage({ answer: "Sorry, I can't understand you. Make sure your API-Key is correct." });
-
-            // return false to indicate that there was an error
-            return false;
+        // check if the response is valid and send it to the popup
+        if (response?.choices?.[0]?.message?.content) {
+            const message = response.choices[0].message.content;
+            sendResponse({ answer: message });
+        } else {
+            throw new Error('API response is missing or invalid');
         }
+    } catch (error) {
+        // log the error
+        console.log(error);
+
+        // send the error message to the popup
+        sendResponse({ answer: getErrorMessage(error) });
     }
 
-    // return true to indicate that the message has been handled
     return true;
+
+    // get the data from the storage
+    async function getStorageData(keys) {
+        return new Promise((resolve) => {
+            chrome.storage.local.get(keys, (data) => resolve(data));
+        });
+    }
+
+    // send the request to the OpenAI API
+    async function sendApiRequest(apiKey, apiModel, currentConversation) {
+        const response = await fetch('https://api.openai.com/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${apiKey}`
+            },
+            body: JSON.stringify({
+                model: apiModel,
+                messages: currentConversation,
+            }),
+        });
+
+        if (!response.ok) {
+            throw new Error(`Failed to fetch. Status code: ${response.status}`);
+        }
+
+        return response.json();
+    }
+
+    // send the response to the popup
+    function sendResponse(data) {
+        chrome.runtime.sendMessage(data);
+    }
+
+    // create a error message based on the error
+    function getErrorMessage(error) {
+        switch (error.message) {
+            case 'API key is missing or invalid':
+                return 'Sorry, I can\'t understand you. Make sure your API-Key is correct.';
+            case 'API model is missing or invalid':
+                return 'Sorry, I can\'t understand you. Make sure a API model is set.';
+            case 'Conversation is not an array':
+                return 'Sorry, I can\'t understand you. Make sure your conversation is a valid array.';
+            case 'API response is missing or invalid':
+                return 'Sorry, I can\'t understand you. The API response is invalid.';
+            default:
+                return 'Sorry, I can\'t understand you. An error occurred.';
+        }
+    }
 });
