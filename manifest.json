@@ -13,8 +13,7 @@
         "https://api.openai.com/v1/completions"
     ],
     "permissions": [
-        "storage",
-        "tabs"
+        "storage"
     ],
     "background": {
         "service_worker": "dist/pages/background/background.js"
